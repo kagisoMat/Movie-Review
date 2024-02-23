@@ -1,0 +1,6 @@
+#MovieReview
+
+The goal of the project is to demonstrate how we can interface with a remote API from a front-end application created using react through which we can retrieve data from the MongoDB database hosted on a remote server,
+as well as posting data to our MongoDB database. Building a Full Stack Java project with Maven, Spring Boot, React, 
+and MongoDB was a dynamic journey that enriched my skills across various facets of Full Stack Development. 
+Used VS Code for the frontend and IntelliJ for the backend, I seamlessly integrated these technologies to create a robust and interactive.
