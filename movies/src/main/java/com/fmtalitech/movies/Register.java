@@ -22,5 +22,5 @@ public class Register {
     private String email;
     private String username;
     private String password;
-
+    private String title;  // Add title for movie registration
 }

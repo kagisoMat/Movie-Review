@@ -16,10 +16,11 @@ public class Review {
     private String id; // Changed from ObjectId to String
 
     private String body;
+    private String imdbId; // Add imdbId to associate the review with a movie
 
-    // Constructor
-    public Review(String body) {
-
+    // Constructor to initialize body and imdbId
+    public Review(String body, String imdbId) {
         this.body = body;
+        this.imdbId = imdbId;
     }
 }
