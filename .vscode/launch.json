@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MoviesApplication<movies>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.fmtalitech.movies.MoviesApplication",
+            "projectName": "movies",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
