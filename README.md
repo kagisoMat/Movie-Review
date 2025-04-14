@@ -1,48 +1,35 @@
-🎥 MovieReview — Full Stack Web Application
-MovieReview is a Full Stack web application that allows users to interact with a remote API to fetch and post movie reviews. This app integrates a React front-end with a Java Spring Boot back-end, connected to a MongoDB Atlas database — providing a real-world example of seamless, end-to-end Full Stack development.
+## 🎥 About MovieReview
 
-🚀 Key Features
-📽️ Submit and view movie reviews in real time
+**MovieReview** is a Full Stack project that showcases how to interface with a **remote API** from a **React front-end**, enabling both **data retrieval** and **data posting** to a **MongoDB database** hosted on a remote server.
 
-🌐 Interface with a remote API for dynamic data retrieval and posting
+This project was designed to demonstrate a real-world Full Stack development workflow using modern technologies. By building this app, I gained hands-on experience in managing both the front-end and back-end aspects of a web application — enhancing my skills in RESTful API design, database integration, and user interface development.
 
-🧠 Full CRUD functionality for reviews
+---
 
-🔄 Connected to a remote MongoDB database using Spring Boot
+### 🔧 Back-End Technologies:
+- **Java 21** with **IntelliJ IDEA**
+- **MongoDB Compass** & **MongoDB Atlas**
+- **Spring Initializer**, **Maven**, **Spring Boot DevTools**
+- **Spring Web**, **Spring Data MongoDB**
+- **Lombok** for cleaner and more efficient code
 
-📊 Responsive UI built with React and Bootstrap
+---
 
-🔧 Back-End Technologies
-Java 21 (IntelliJ IDEA)
+### 🎨 Front-End Technologies:
+- **VS Code**, **React**, **Node.js**
+- **HTML**, **JavaScript**, **CSS**, **Bootstrap**
 
-Spring Boot (Spring Web, Spring Data MongoDB)
+---
 
-MongoDB Atlas & MongoDB Compass
+### 🧪 Technologies Used for Testing:
+- **JUnit 5** — Unit testing framework for Java
+- **Mockito** — Mocking framework to simulate dependencies and behaviors
+- **Spring Boot Test** — Integration and context loading support for Spring Boot
+- **MockitoAnnotations** — For injecting mocks into test classes
+- **AssertJ / JUnit Assertions** — For fluent, readable assertions
 
-Lombok for reducing boilerplate
-
-Maven for project management
-
-Spring Boot DevTools for live reloading
-
-🎨 Front-End Technologies
-React (with functional components and hooks)
-
-Node.js
-
-HTML, JavaScript, CSS
-
-Bootstrap for responsive UI design
-
-VS Code as the development environment
-
-🌟 Achievements
-🔗 Seamless integration between React and Spring Boot
-
-💬 Enabled real-time posting and fetching of movie reviews
-
-🧩 Leveraged MongoDB Atlas for secure, cloud-hosted data storage
-
-✨ Created a clean, responsive front-end interface
-
-🧪 Implemented unit testing for service layers with JUnit and Mockito
+### 🌟 Achievements:
+- 🚀 Seamless integration of technologies for smooth, end-to-end data flow  
+- 💡 Built a responsive and dynamic user interface  
+- 📦 Effective use of React, Spring Boot, and MongoDB to demonstrate full-stack capability  
+- 🧩 Successfully posted and retrieved data via a RESTful API connected to a remote MongoDB server
