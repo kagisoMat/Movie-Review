@@ -1,4 +1,4 @@
-package com.fmtalitech.movies;
+package com.fmtalitech.movies.register;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;

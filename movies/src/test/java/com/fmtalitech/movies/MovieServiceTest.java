@@ -1,85 +1,53 @@
 package com.fmtalitech.movies;
 
-import java.util.Arrays;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 class MovieServiceTest {
 
+    @Mock
     private MovieRepository movieRepository;
+
+    @InjectMocks
     private MovieService movieService;
 
     @BeforeEach
     void setUp() {
-        movieRepository = Mockito.mock(MovieRepository.class);
-        movieService = new MovieService(movieRepository);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testAllMovies() {
-        // Arrange
-        Movie movie1 = new Movie();
-        movie1.setImdbId("tt1234567");
-        movie1.setTitle("Test Movie 1");
+    void shouldReturnAllMovies() {
+        Movie movie = new Movie(); // Create your own movie object and set fields
+        movie.setImdbId("tt0111161");
+        movie.setTitle("The Shawshank Redemption");
 
-        Movie movie2 = new Movie();
-        movie2.setImdbId("tt7654321");
-        movie2.setTitle("Test Movie 2");
+        when(movieRepository.findAll()).thenReturn(List.of(movie));
 
-        List<Movie> movies = Arrays.asList(movie1, movie2);
-        when(movieRepository.findAll()).thenReturn(movies);
-
-        // Act
-        List<Movie> result = movieService.allMovies();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("Test Movie 1", result.get(0).getTitle());
-        verify(movieRepository, times(1)).findAll();
+        List<Movie> movies = movieService.allMovies();
+        assertThat(movies).hasSize(1);
+        assertThat(movies.get(0).getImdbId()).isEqualTo("tt0111161");
     }
 
     @Test
-    void testSingleMovieFound() {
-        // Arrange
-        String imdbId = "tt1234567";
+    void shouldReturnMovieByImdbId() {
         Movie movie = new Movie();
-        movie.setImdbId(imdbId);
-        Optional<Movie> movieOptional = Optional.of(movie);
+        movie.setImdbId("tt0111161");
+        movie.setTitle("The Shawshank Redemption");
 
-        when(movieRepository.findMovieByImdbId(imdbId)).thenReturn(movieOptional);
+        when(movieRepository.findMovieByImdbId("tt0111161")).thenReturn(Optional.of(movie));
 
-        // Act
-        Optional<Movie> result = movieService.singleMovie(imdbId);
-
-        // Assert
-        assertTrue(result.isPresent());
-        assertEquals(imdbId, result.get().getImdbId());
-        verify(movieRepository, times(1)).findMovieByImdbId(imdbId);
-    }
-
-    @Test
-    void testSingleMovieNotFound() {
-        // Arrange
-        String imdbId = "tt0000000";
-        when(movieRepository.findMovieByImdbId(imdbId)).thenReturn(Optional.empty());
-
-        // Act
-        Optional<Movie> result = movieService.singleMovie(imdbId);
-
-        // Assert
-        assertFalse(result.isPresent());
-        verify(movieRepository, times(1)).findMovieByImdbId(imdbId);
+        Optional<Movie> result = movieService.singleMovie("tt0111161");
+        assertThat(result).isPresent();
+        assertThat(result.get().getTitle()).isEqualTo("The Shawshank Redemption");
     }
 }

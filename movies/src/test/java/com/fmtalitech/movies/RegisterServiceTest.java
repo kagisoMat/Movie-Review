@@ -1,22 +1,18 @@
 package com.fmtalitech.movies;
 
-import com.mongodb.client.result.UpdateResult;
-import org.bson.types.ObjectId;
+import com.fmtalitech.movies.register.Register;
+import com.fmtalitech.movies.register.RegisterRepository;
+import com.fmtalitech.movies.register.RegisterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.data.mongodb.core.ExecutableUpdateOperation;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.Query;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class RegisterServiceTest {
-
-    @InjectMocks
-    private RegisterService registerService;
+class RegisterServiceTest {
 
     @Mock
     private RegisterRepository registerRepository;
@@ -24,56 +20,57 @@ public class RegisterServiceTest {
     @Mock
     private MongoTemplate mongoTemplate;
 
-    // 🔥 Correct generic type for Movie
-    @Mock
-    private ExecutableUpdateOperation.ExecutableUpdate<Movie> executableUpdate;
+    @InjectMocks
+    private RegisterService registerService;
 
-    @Mock
-    private ExecutableUpdateOperation.TerminatingUpdate<Movie> terminatingUpdate;
+    private Register register;
+    private Movie movie;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        register = new Register();
+        register.setImdbId("tt1234567");
+        register.setTitle("New Title");
+        register.setName("John");
+        register.setSurname("Doe");
+        register.setEmail("john@example.com");
+        register.setUsername("johndoe");
+        register.setPassword("securepass");
+
+        movie = new Movie();
+        movie.setImdbId("tt1234567");
+        movie.setTitle("Old Title");
     }
 
     @Test
-    void testCreateRegister_successful() {
-        // Given
-        RegisterRequest request = new RegisterRequest();
-        request.setImdbId("tt123456");
-        request.setName("John");
-        request.setSurname("Doe");
-        request.setEmail("john.doe@example.com");
-        request.setUsername("johndoe");
-        request.setPassword("secure123");
+    void shouldUpdateMovieAndSaveRegister() {
+        // Mock MongoTemplate behavior
+        when(mongoTemplate.findOne(any(Query.class), eq(Movie.class))).thenReturn(movie);
+        when(registerRepository.save(register)).thenReturn(register);
 
-        Register mockRegister = new Register(
-                new ObjectId(),
-                request.getImdbId(),
-                request.getName(),
-                request.getSurname(),
-                request.getEmail(),
-                request.getUsername(),
-                request.getPassword()
-        );
+        Register result = registerService.registerMovie(register);
 
-        when(registerRepository.insert(any(Register.class))).thenReturn(mockRegister);
+        assertThat(result).isNotNull();
+        assertThat(result.getName()).isEqualTo("John");
 
-        // ✅ Correct mocking chain with Movie type
-        when(mongoTemplate.update(Movie.class)).thenReturn(executableUpdate);
-        when(executableUpdate.matching(any(Criteria.class))).thenReturn(executableUpdate);
-        when(executableUpdate.apply(any(Update.class))).thenReturn(terminatingUpdate);
-        when(terminatingUpdate.first()).thenReturn(mock(UpdateResult.class));
+        // Verify interactions
+        verify(mongoTemplate).findOne(any(Query.class), eq(Movie.class));
+        verify(mongoTemplate).save(movie);
+        verify(registerRepository).save(register);
+    }
 
-        // When
-        Register result = registerService.createRegister(request);
+    @Test
+    void shouldSaveRegisterWhenMovieNotFound() {
+        // Mock movie not found
+        when(mongoTemplate.findOne(any(Query.class), eq(Movie.class))).thenReturn(null);
+        when(registerRepository.save(register)).thenReturn(register);
 
-        // Then
-        assertNotNull(result);
-        assertEquals("John", result.getName());
-        assertEquals("Doe", result.getSurname());
+        Register result = registerService.registerMovie(register);
 
-        verify(registerRepository).insert(any(Register.class));
-        verify(mongoTemplate).update(Movie.class);
+        assertThat(result).isNotNull();
+        verify(mongoTemplate, never()).save(any(Movie.class));
+        verify(registerRepository).save(register);
     }
 }

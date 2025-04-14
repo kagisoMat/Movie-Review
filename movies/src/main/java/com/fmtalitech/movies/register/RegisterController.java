@@ -1,4 +1,4 @@
-package com.fmtalitech.movies;
+package com.fmtalitech.movies.register;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

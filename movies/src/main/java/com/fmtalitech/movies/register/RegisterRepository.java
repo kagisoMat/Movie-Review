@@ -1,4 +1,4 @@
-package com.fmtalitech.movies;
+package com.fmtalitech.movies.register;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
