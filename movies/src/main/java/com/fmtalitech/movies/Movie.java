@@ -1,7 +1,5 @@
 package com.fmtalitech.movies;
 
-import com.fmtalitech.movies.Register;
-import com.fmtalitech.movies.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,10 +24,7 @@ public class Movie {
     private String poster;
     private List<String> backdrops;
     private List<String> genres;
-
     @DocumentReference
     private List<Review> reviews;
 
-    @DocumentReference
-    private List<Register> registeredUsers; // New line
 }
